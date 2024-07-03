@@ -56,10 +56,10 @@ type TBSCertificate struct {
 	Version      int64 `asn1:"explicit,tag:0"`
 	SerialNumber *big.Int
 	Signature    pkix.AlgorithmIdentifier
-	//Issuer       Name
 	//Issuer pkix.Name
-	//Validity     Validity
-	//Subject      pkix.Name
+	Issuer   Name
+	Validity Validity
+	Subject  Name
 	//SubjectPublicKeyInfo asn1.RawValue
 	//IssuerUniqueID       asn1.RawValue
 	//SubjectUniqueID      asn1.RawValue
@@ -77,17 +77,15 @@ type TBSCertificate struct {
 //	RDNSequences []RDNSequence `asn1:"set"`
 //}
 
+// AttributeTypeAndValue 表示一个属性类型和值
 type AttributeTypeAndValue struct {
 	OID   asn1.ObjectIdentifier
 	Value string
 }
 
-type RDNSequence struct {
-	Attributes []AttributeTypeAndValue `asn1:"set"`
-}
-
+// Name 表示一个 RDN 序列
 type Name struct {
-	RDNSequences []RDNSequence
+	Attributes []AttributeTypeAndValue `asn1:"set"`
 }
 
 type Validity struct {
