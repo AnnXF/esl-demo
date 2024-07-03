@@ -72,6 +72,7 @@ func main() {
 		return
 	}
 	// 输出解码后的 Header
-	fmt.Printf("Decoded cert: %+v\n", cert.TBSCertificate.Signature.Algorithm.String())
+	fmt.Printf("Decoded cert: %+v\n", cert.TBSCertificate.SubjectPublicKeyInfo.Algorithm.Algorithm.String())
+	fmt.Printf("Decoded cert: %s\n", cert.TBSCertificate.SubjectPublicKeyInfo.SubjectPublicKey.Bytes)
 
 }

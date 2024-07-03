@@ -57,25 +57,14 @@ type TBSCertificate struct {
 	SerialNumber *big.Int
 	Signature    pkix.AlgorithmIdentifier
 	//Issuer pkix.Name
-	Issuer   Name
-	Validity Validity
-	Subject  Name
-	//SubjectPublicKeyInfo asn1.RawValue
-	//IssuerUniqueID       asn1.RawValue
-	//SubjectUniqueID      asn1.RawValue
-	//Extensions           asn1.RawValue
+	Issuer               Name
+	Validity             Validity
+	Subject              Name
+	SubjectPublicKeyInfo SubjectPublicKeyInfo
+	//IssuerUniqueID       int64 `asn1:"explicit,tag:0"`
+	//SubjectUniqueID      int64 `asn1:"explicit,tag:0"`
+	//Extensions           int64 `asn1:"explicit,tag:0"`
 }
-
-//type AttributeTypeAndValue struct {
-//	OID   asn1.ObjectIdentifier
-//	Value asn1.RawValue
-//}
-//
-//type RDNSequence []AttributeTypeAndValue
-//
-//type Name struct {
-//	RDNSequences []RDNSequence `asn1:"set"`
-//}
 
 // AttributeTypeAndValue 表示一个属性类型和值
 type AttributeTypeAndValue struct {
@@ -91,6 +80,11 @@ type Name struct {
 type Validity struct {
 	NotBefore time.Time
 	NotAfter  time.Time
+}
+
+type SubjectPublicKeyInfo struct {
+	Algorithm        pkix.AlgorithmIdentifier
+	SubjectPublicKey asn1.BitString
 }
 
 // CertDigestList 签章者证书的杂凑值
