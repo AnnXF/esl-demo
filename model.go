@@ -1,7 +1,9 @@
 package main
 
 import (
+	"crypto/x509/pkix"
 	"encoding/asn1"
+	"math/big"
 	"time"
 )
 
@@ -45,22 +47,47 @@ type SES_CertList struct {
 
 // CertInfoList 签章者证书
 type CertInfoList struct {
-	TBSCertificate TBSCertificate
-	//SignatureAlgorithm pkix.AlgorithmIdentifier
-	//SignatureValue     asn1.BitString
+	TBSCertificate     TBSCertificate
+	SignatureAlgorithm pkix.AlgorithmIdentifier
+	SignatureValue     asn1.BitString
 }
 
 type TBSCertificate struct {
-	Version int64 `asn1:"explicit,tag:0"`
-	//SerialNumber int64 `asn1:"explicit,tag:0"`
-	//Signature    pkix.AlgorithmIdentifier
-	//Issuer       pkix.Name
+	Version      int64 `asn1:"explicit,tag:0"`
+	SerialNumber *big.Int
+	Signature    pkix.AlgorithmIdentifier
+	//Issuer       Name
+	//Issuer pkix.Name
 	//Validity     Validity
 	//Subject      pkix.Name
 	//SubjectPublicKeyInfo asn1.RawValue
 	//IssuerUniqueID       asn1.RawValue
 	//SubjectUniqueID      asn1.RawValue
 	//Extensions           asn1.RawValue
+}
+
+//type AttributeTypeAndValue struct {
+//	OID   asn1.ObjectIdentifier
+//	Value asn1.RawValue
+//}
+//
+//type RDNSequence []AttributeTypeAndValue
+//
+//type Name struct {
+//	RDNSequences []RDNSequence `asn1:"set"`
+//}
+
+type AttributeTypeAndValue struct {
+	OID   asn1.ObjectIdentifier
+	Value string
+}
+
+type RDNSequence struct {
+	Attributes []AttributeTypeAndValue `asn1:"set"`
+}
+
+type Name struct {
+	RDNSequences []RDNSequence
 }
 
 type Validity struct {

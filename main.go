@@ -72,6 +72,6 @@ func main() {
 		return
 	}
 	// 输出解码后的 Header
-	fmt.Printf("Decoded cert: %+v\n", cert)
+	fmt.Printf("Decoded cert: %+v\n", cert.SignatureAlgorithm.Algorithm.String())
 
 }
