@@ -61,17 +61,17 @@ func main() {
 		fmt.Println("Error decoding PKIMessage ASN.1 data:", err)
 		return
 	}
-	// 输出解码后的 Header
-	fmt.Printf("Decoded PKIMessage Header: %+v\n", sESeal)
+	////输出解码后的 Header
+	//fmt.Printf("Decoded PKIMessage Header: %+v\n", sESeal)
 
-	//var cert TBSCertificate
-	//certByte := sESeal.ESealInfo.Property.CertList.Certs
-	//_, err = asn1.Unmarshal(certByte, &cert)
-	//if err != nil {
-	//	fmt.Println("Error cert ASN.1 data:", err)
-	//	return
-	//}
-	//// 输出解码后的 Header
-	//fmt.Printf("Decoded cert: %+v\n", cert)
+	var cert CertInfoList
+	certByte := sESeal.ESealInfo.Property.CertList.Certs
+	_, err = asn1.Unmarshal(certByte, &cert)
+	if err != nil {
+		fmt.Println("Error cert ASN.1 data:", err)
+		return
+	}
+	// 输出解码后的 Header
+	fmt.Printf("Decoded cert: %+v\n", cert)
 
 }

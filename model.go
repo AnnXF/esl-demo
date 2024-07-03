@@ -43,12 +43,6 @@ type SES_CertList struct {
 	//CertDigestList CertDigestList // 签章者证书的杂凑值
 }
 
-// SES_CertListDemo 签证者证书信息列表
-type SES_CertListDemo struct {
-	Certs CertInfoList // 签章者证书
-	//CertDigestList CertDigestList // 签章者证书的杂凑值
-}
-
 // CertInfoList 签章者证书
 type CertInfoList struct {
 	TBSCertificate TBSCertificate
@@ -57,8 +51,8 @@ type CertInfoList struct {
 }
 
 type TBSCertificate struct {
-	Version int64
-	//SerialNumber int64
+	Version int64 `asn1:"explicit,tag:0"`
+	//SerialNumber int64 `asn1:"explicit,tag:0"`
 	//Signature    pkix.AlgorithmIdentifier
 	//Issuer       pkix.Name
 	//Validity     Validity
