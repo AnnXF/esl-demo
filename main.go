@@ -4,12 +4,12 @@ import (
 	"encoding/asn1"
 	"fmt"
 	"github.com/tjfoc/gmsm/x509"
-	"io/ioutil"
+	"os"
 )
 
 func main() {
 	// 读取 Seal.esl 文件
-	data, err := ioutil.ReadFile("/Users/ann-xf/Desktop/ann_work/ann-demo/esl/Seal.esl")
+	data, err := os.ReadFile("./Seal.esl")
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		return
@@ -24,7 +24,7 @@ func main() {
 	}
 
 	certByte1 := sESeal.ESealInfo.Property.CertList.Certs
-	certSign, err := x509.ParseCertificates(certByte1)
+	certSign, err := x509.ParseCertificate(certByte1)
 	if err != nil {
 		fmt.Println("Error cert ASN.1 data:", err)
 		return
@@ -39,5 +39,13 @@ func main() {
 		return
 	}
 	fmt.Printf(" x509.ParseCertificates certMake: %+v\n", certMake)
+
+	//CheckIntegrity(sESeal)
+
+	//if err := VerifySignature(sESeal); err != nil {
+	//	fmt.Println("Signature verification failed:", err)
+	//} else {
+	//	fmt.Println("Signature verification succeeded")
+	//}
 
 }
