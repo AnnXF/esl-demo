@@ -2,4 +2,9 @@ module esl
 
 go 1.22.4
 
-require github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa
+require github.com/tjfoc/gmsm v1.4.1
+
+require (
+	golang.org/x/crypto v0.0.0-20201012173705-84dcc777aaee // indirect
+	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
+)

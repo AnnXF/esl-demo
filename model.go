@@ -1,14 +1,15 @@
 package main
 
 import (
-	"crypto/x509/pkix"
 	"encoding/asn1"
-	"math/big"
 	"time"
 )
 
 type SESeal struct {
-	ESealInfo SES_SealInfo // 印章信息
+	ESealInfo   SES_SealInfo          // 印章信息 实际证书
+	Cert        []byte                // 制章者证书 实际证书颁发印章
+	SignAlgID   asn1.ObjectIdentifier // 算法签名标识
+	SignedValue asn1.BitString        // 签名值
 }
 
 type SES_SealInfo struct {
@@ -40,57 +41,6 @@ type SES_ESPropertyInfo struct {
 // SES_CertList 签证者证书信息列表
 type SES_CertList struct {
 	Certs []byte // 签章者证书
-	//Certs CertInfoList // 签章者证书
-	//Certs CertInfoList // 签章者证书
-	//CertDigestList CertDigestList // 签章者证书的杂凑值
-}
-
-// CertInfoList 签章者证书
-type CertInfoList struct {
-	TBSCertificate     TBSCertificate
-	SignatureAlgorithm pkix.AlgorithmIdentifier
-	SignatureValue     asn1.BitString
-}
-
-type TBSCertificate struct {
-	Version      int64 `asn1:"explicit,tag:0"`
-	SerialNumber *big.Int
-	Signature    pkix.AlgorithmIdentifier
-	//Issuer pkix.Name
-	Issuer               Name
-	Validity             Validity
-	Subject              Name
-	SubjectPublicKeyInfo SubjectPublicKeyInfo
-	//IssuerUniqueID       int64 `asn1:"explicit,tag:0"`
-	//SubjectUniqueID      int64 `asn1:"explicit,tag:0"`
-	//Extensions           int64 `asn1:"explicit,tag:0"`
-}
-
-// AttributeTypeAndValue 表示一个属性类型和值
-type AttributeTypeAndValue struct {
-	OID   asn1.ObjectIdentifier
-	Value string
-}
-
-// Name 表示一个 RDN 序列
-type Name struct {
-	Attributes []AttributeTypeAndValue `asn1:"set"`
-}
-
-type Validity struct {
-	NotBefore time.Time
-	NotAfter  time.Time
-}
-
-type SubjectPublicKeyInfo struct {
-	Algorithm        pkix.AlgorithmIdentifier
-	SubjectPublicKey asn1.BitString
-}
-
-// CertDigestList 签章者证书的杂凑值
-type CertDigestList struct {
-	Type  string //自定义类型
-	Value []byte // 证书杂凑值
 }
 
 // SES_ESPictureInfo 印章图像数据
